@@ -1,0 +1,188 @@
+openapi: 3.1.0
+info:
+  title: NewsAPI - Noticias Financieras
+  version: 1.0.1
+  description: >
+    Acceso a artículos y titulares desde NewsAPI. Requiere autenticación con X-Api-Key.
+servers:
+  - url: https://newsapi.org/v2
+paths:
+  /everything:
+    get:
+      operationId: obtenerNoticias
+      summary: Buscar noticias usando palabras clave
+      parameters:
+        - name: q
+          in: query
+          required: true
+          schema:
+            type: string
+        - name: from
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: to
+          in: query
+          required: false
+          schema:
+            type: string
+            format: date-time
+        - name: language
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - ar
+              - de
+              - en
+              - es
+              - fr
+              - he
+              - it
+              - nl
+              - pt
+              - ru
+              - sv
+              - ud
+              - zh
+      responses:
+        '200':
+          description: Noticias encontradas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  totalResults:
+                    type: integer
+                  articles:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Article'
+
+  /top-headlines:
+    get:
+      operationId: obtenerTitulares
+      summary: Obtener titulares principales
+      parameters:
+        - name: country
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+            enum:
+              - business
+              - entertainment
+              - general
+              - health
+              - science
+              - sports
+              - technology
+        - name: q
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Titulares encontrados
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  totalResults:
+                    type: integer
+                  articles:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Article'
+
+  /top-headlines/sources:
+    get:
+      operationId: obtenerFuentes
+      summary: Obtener fuentes disponibles
+      responses:
+        '200':
+          description: Fuentes encontradas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  sources:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Source'
+
+components:
+  securitySchemes:
+    apiKeyHeader:
+      type: apiKey
+      in: header
+      name: X-Api-Key
+  schemas:
+    Article:
+      type: object
+      properties:
+        source:
+          type: object
+          properties:
+            id:
+              type: string
+              nullable: true
+            name:
+              type: string
+        author:
+          type: string
+          nullable: true
+        title:
+          type: string
+        description:
+          type: string
+          nullable: true
+        url:
+          type: string
+        urlToImage:
+          type: string
+          nullable: true
+        publishedAt:
+          type: string
+          format: date-time
+        content:
+          type: string
+          nullable: true
+    Source:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+        category:
+          type: string
+        language:
+          type: string
+        country:
+          type: string
+
+security:
+  - apiKeyHeader: []
