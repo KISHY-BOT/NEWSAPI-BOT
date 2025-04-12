@@ -1,0 +1,22 @@
+{
+  "name": "newsapi_noticias_financieras",
+  "description": "Consulta noticias financieras en tiempo real desde NewsAPI. Puedes buscar por palabras clave, país, categoría o fuente.",
+  "auth": {
+    "type": "api_key",
+    "authorizationType": "header",
+    "name": "X-Api-Key"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://raw.githubusercontent.com/KISHY-BOT/NEWSAPI-BOT/main/openapi.yaml",
+    "is_user_authenticated": true
+  },
+  "logo_url": "https://newsapi.org/images/favicon-32x32.png",
+  "contact_email": "soporte@kishybot.dev",
+  "legal_info_url": "https://newsapi.org/terms",
+  "x-openai": {
+    "customHeaders": {
+      "User-Agent": "KishyNoticiasBot/1.0"
+    }
+  }
+}
