@@ -6,7 +6,7 @@ info:
     Acceso a artículos y titulares desde NewsAPI. Requiere autenticación con X-Api-Key.
 servers:
   - url: https://newsapi.org/v2
-    description: Servidor principal de NewsAPI (producción)
+    description: Servidor principal de NewsAPI
 paths:
   /everything:
     get:
